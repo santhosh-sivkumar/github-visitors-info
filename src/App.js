@@ -1,6 +1,5 @@
-// src/App.js
 import React from "react";
-import VisitorsList from "./VisitorsList";
+import VisitorsList from "./components/VisitorsList";
 
 const App = () => {
   return (

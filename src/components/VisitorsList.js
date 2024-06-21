@@ -1,8 +1,10 @@
-// @ts-nocheck
 // src/VisitorsList.js
 import React, { useEffect, useState } from "react";
-import { db } from "./firebase";
+import { db } from "../firebase";
 import { collection, query, onSnapshot } from "firebase/firestore";
+import TableHeader from "./TableHeader";
+import TableBody from "./TableBody";
+import Pagination from "./Pagination";
 import LoadingComponent from "./LoadingComponent";
 
 const columns = [
@@ -30,10 +32,11 @@ const VisitorsList = () => {
       const q = query(visitorsCollection);
 
       const unsubscribe = onSnapshot(q, (snapshot) => {
-        const visitorsData = [];
-        snapshot.forEach((doc) => {
-          visitorsData.push({ id: doc.id, ...doc.data() });
-        });
+        const visitorsData = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        // @ts-ignore
         setVisitors(visitorsData);
         setLoading(false);
       });
@@ -47,14 +50,13 @@ const VisitorsList = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = visitors.slice(indexOfFirstItem, indexOfLastItem);
-
   const startingID = (currentPage - 1) * itemsPerPage + 1;
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const emptyRows = itemsPerPage - currentItems.length;
   const fillEmptyRows = Array.from({ length: emptyRows }, (_, index) => (
-    <tr key={`empty-${index}`} className="bg-white text-center ">
+    <tr key={`empty-${index}`} className="bg-white text-center">
       {columns.map((col, colIndex) => (
         <td key={colIndex} className="px-4 py-2">
           <p className="text-white">Empty</p>
@@ -68,68 +70,32 @@ const VisitorsList = () => {
       <h1 className="text-3xl text-center font-bold mb-4 text-gray-800">
         Github Visitors
       </h1>
+      <p className="text-start mb-4 text-gray-600">
+        Available Data: {visitors.length}
+      </p>
       <div className="overflow-x-auto">
         <table className="table-auto rounded-[0.3rem] w-full border-gray-300">
-          <thead>
-            <tr className="bg-gray-300 border border-gray-300">
-              {columns.map((col, index) => (
-                <th
-                  key={index}
-                  className="px-4 py-2 text-gray-800 font-bold"
-                  style={{ width: "150px" }}
-                >
-                  {col.header}
-                </th>
-              ))}
-            </tr>
-          </thead>
+          <TableHeader columns={columns} />
           {loading ? (
             <LoadingComponent columns={columns}>Loading...</LoadingComponent>
           ) : currentItems.length ? (
-            <tbody
-              className="border border-gray-300 "
-              style={{ height: "500px" }}
-            >
-              {currentItems.map((visitor, index) => (
-                <tr
-                  key={visitor.id}
-                  className="hover:bg-gray-200 border border-gray-300 text-center bg-gray-100 rounded-lg"
-                >
-                  {console.log("visitor : ", visitor)}
-                  {columns.map((col, colIndex) => (
-                    <td key={colIndex} className="px-4 py-2">
-                      {col.accessor(visitor, startingID, index)}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-              {fillEmptyRows}
-            </tbody>
+            <TableBody
+              currentItems={currentItems}
+              columns={columns}
+              startingID={startingID}
+              fillEmptyRows={fillEmptyRows}
+            />
           ) : (
             <LoadingComponent columns={columns}>No data found</LoadingComponent>
           )}
         </table>
       </div>
-      <div className="flex justify-center mt-4">
-        <ul className="flex space-x-2">
-          {[...Array(Math.ceil(visitors.length / itemsPerPage)).keys()].map(
-            (number) => (
-              <li key={number}>
-                <button
-                  onClick={() => paginate(number + 1)}
-                  className={`px-3 py-1 rounded-md ${
-                    currentPage === number + 1
-                      ? "bg-gray-800 text-white"
-                      : "bg-gray-200 text-gray-800"
-                  }`}
-                >
-                  {number + 1}
-                </button>
-              </li>
-            )
-          )}
-        </ul>
-      </div>
+      <Pagination
+        totalItems={visitors.length}
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        paginate={paginate}
+      />
     </div>
   );
 };
