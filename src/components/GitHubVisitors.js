@@ -72,7 +72,7 @@ const GitHubVisitors = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl text-center font-bold mb-4 text-gray-800">
-        GitHub Visitors Info
+        My GitHub Visitors
       </h1>
       <div className="flex gap-6 md:justify-start justify-center">
         <p className="text-center mb-4 text-gray-600">
