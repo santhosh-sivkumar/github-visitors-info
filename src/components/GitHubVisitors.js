@@ -76,13 +76,7 @@ const GitHubVisitors = () => {
       </h1>
       <div className="flex gap-6 md:justify-start justify-center">
         <p className="text-center mb-4 text-gray-600">
-          Username:{" "}
-          <span
-            className=" text-gray-800
-          "
-          >
-            {"santhosh-sivkumar"}
-          </span>
+          Username: {"santhosh-sivkumar"}
         </p>
         <p className="text-center mb-4 text-gray-600">
           Total Visitors: {visitors.length}
