@@ -1,11 +1,11 @@
-// src/VisitorsList.js
+// src/GitHubVisitors.js
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, query, onSnapshot } from "firebase/firestore";
-import TableHeader from "./TableHeader";
-import TableBody from "./TableBody";
 import Pagination from "./Pagination";
-import LoadingComponent from "./LoadingComponent";
+import ListView from "./ListView";
+import TableView from "./TableView";
+import { useMediaQuery } from "react-responsive";
 
 const columns = [
   {
@@ -20,7 +20,7 @@ const columns = [
   { header: "Date & Time", accessor: (visitor) => visitor.dateTime },
 ];
 
-const VisitorsList = () => {
+const GitHubVisitors = () => {
   const [visitors, setVisitors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -65,31 +65,44 @@ const VisitorsList = () => {
     </tr>
   ));
 
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 1024px)",
+  });
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl text-center font-bold mb-4 text-gray-800">
-        Github Visitors
+        GitHub Visitors Info
       </h1>
-      <p className="text-start mb-4 text-gray-600">
-        Available Data: {visitors.length}
-      </p>
-      <div className="overflow-x-auto">
-        <table className="table-auto rounded-[0.3rem] w-full border-gray-300">
-          <TableHeader columns={columns} />
-          {loading ? (
-            <LoadingComponent columns={columns}>Loading...</LoadingComponent>
-          ) : currentItems.length ? (
-            <TableBody
-              currentItems={currentItems}
-              columns={columns}
-              startingID={startingID}
-              fillEmptyRows={fillEmptyRows}
-            />
-          ) : (
-            <LoadingComponent columns={columns}>No data found</LoadingComponent>
-          )}
-        </table>
+      <div className="flex gap-6 md:justify-start justify-center">
+        <p className="text-center mb-4 text-gray-600">
+          Username:{" "}
+          <span
+            className=" text-gray-800
+          "
+          >
+            {"santhosh-sivkumar"}
+          </span>
+        </p>
+        <p className="text-center mb-4 text-gray-600">
+          Total Visitors: {visitors.length}
+        </p>
       </div>
+      {isDesktopOrLaptop ? (
+        <TableView
+          columns={columns}
+          loading={loading}
+          currentItems={currentItems}
+          startingID={startingID}
+          fillEmptyRows={fillEmptyRows}
+        />
+      ) : (
+        <ListView
+          visitors={currentItems}
+          loading={loading}
+          startingID={startingID}
+        />
+      )}
       <Pagination
         totalItems={visitors.length}
         itemsPerPage={itemsPerPage}
@@ -100,4 +113,4 @@ const VisitorsList = () => {
   );
 };
 
-export default VisitorsList;
+export default GitHubVisitors;

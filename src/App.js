@@ -1,10 +1,10 @@
 import React from "react";
-import VisitorsList from "./components/VisitorsList";
+import GitHubVisitors from "./components/GitHubVisitors";
 
 const App = () => {
   return (
     <div className="App">
-      <VisitorsList />
+      <GitHubVisitors />
     </div>
   );
 };
