@@ -1,3 +1,4 @@
+// @ts-nocheck
 // src/GitHubVisitors.js
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
@@ -10,6 +11,7 @@ import { useMediaQuery } from "react-responsive";
 const columns = [
   {
     header: "ID",
+
     accessor: (visitor, startingID, index) => startingID + index,
   },
   { header: "IP Address", accessor: (visitor) => visitor.ip },
@@ -36,8 +38,12 @@ const GitHubVisitors = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        // @ts-ignore
-        setVisitors(visitorsData);
+
+        const sortedData = visitorsData?.sort(
+          (a, b) => b.timestamp.seconds - a.timestamp.seconds
+        );
+
+        setVisitors(sortedData);
         setLoading(false);
       });
 
