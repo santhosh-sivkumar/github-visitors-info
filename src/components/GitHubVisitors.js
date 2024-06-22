@@ -160,7 +160,7 @@ const GitHubVisitors = () => {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-8 rounded shadow-md">
             <h2 className="text-xl font-bold mb-4">Enter Credentials</h2>
-            {staticEmail}
+            email : {staticEmail}
             <input
               type="email"
               placeholder="Email"
@@ -168,8 +168,7 @@ const GitHubVisitors = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="mb-4 p-2 border rounded w-full"
             />
-            {staticPassword}
-
+            pwd : {staticPassword}
             <input
               type="password"
               placeholder="Password"
