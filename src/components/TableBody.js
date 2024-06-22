@@ -6,10 +6,10 @@ const TableBody = ({ currentItems, columns, startingID, fillEmptyRows }) => (
     {currentItems.map((visitor, index) => (
       <tr
         key={visitor.id}
-        className="hover:bg-gray-200 border border-gray-300 text-center bg-gray-100 rounded-lg h-[50px]"
+        className="hover:bg-green-900 border border-gray-300 text-center bg-[#252b32] rounded-lg h-[50px]"
       >
         {columns.map((col, colIndex) => (
-          <td key={colIndex} className="px-4 py-1">
+          <td key={colIndex} className="px-4 py-1 text-white">
             {col.accessor(visitor, startingID, index)}
           </td>
         ))}

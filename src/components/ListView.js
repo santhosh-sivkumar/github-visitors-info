@@ -17,7 +17,7 @@ const ListView = ({ visitors, loading, startingID }) => {
       {visitors.map((visitor, index) => (
         <div
           key={visitor.id}
-          className="bg-gray-100 p-4 mb-4 rounded shadow-md"
+          className="bg-[#252b32] p-4 mb-4 rounded shadow-md text-white hover:bg-green-900"
         >
           <p>
             <strong>ID:</strong> {startingID + index}

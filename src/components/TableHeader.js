@@ -3,7 +3,7 @@ import React from "react";
 
 const TableHeader = ({ columns }) => (
   <thead>
-    <tr className="bg-gray-800 border border-gray-300">
+    <tr className=" bg-green-800 border border-gray-300">
       {columns.map((col, index) => (
         <th
           key={index}

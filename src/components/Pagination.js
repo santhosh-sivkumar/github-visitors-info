@@ -17,8 +17,8 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, paginate }) => {
               onClick={() => paginate(number)}
               className={`px-3 py-1 rounded-md ${
                 currentPage === number
-                  ? "bg-gray-800 text-white"
-                  : "bg-gray-200 text-gray-800"
+                  ? "bg-gray-200 text-gray-800"
+                  : "bg-gray-800 text-white"
               }`}
             >
               {number}
