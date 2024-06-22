@@ -78,7 +78,7 @@ const GitHubVisitors = () => {
 
       await batch.commit();
     } else {
-      alert("Invalid credentials");
+      alert("Invalid credentials : Access Denied");
     }
   };
 
