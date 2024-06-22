@@ -27,8 +27,8 @@ const columns = [
   { header: "Date & Time", accessor: (visitor) => visitor.dateTime },
 ];
 
-const staticEmail = process.env.FROM_EMAIL;
-const staticPassword = process.env.EMAIL_PASS;
+const staticEmail = process.env.REACT_APP_STATIC_EMAIL;
+const staticPassword = process.env.REACT_APP_STATIC_PASSWORD;
 
 const GitHubVisitors = () => {
   const [visitors, setVisitors] = useState([]);
