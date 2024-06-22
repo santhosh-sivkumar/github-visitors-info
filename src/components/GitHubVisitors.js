@@ -83,6 +83,8 @@ const GitHubVisitors = () => {
     } else {
       alert("Invalid credentials");
       setShowPopup(false);
+      setPassword("");
+      setEmail("");
     }
   };
 
