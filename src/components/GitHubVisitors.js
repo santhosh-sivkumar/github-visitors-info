@@ -68,9 +68,6 @@ const GitHubVisitors = () => {
   const deleteCollectionData = async () => {
     if (email === staticEmail && password === staticPassword) {
       setVisitors([]);
-      setShowPopup(false);
-      setPassword("");
-      setEmail("");
       const visitorsCollection = collection(db, currentCollection);
       const snapshot = await getDocs(visitorsCollection);
       const batch = writeBatch(db);
@@ -82,9 +79,6 @@ const GitHubVisitors = () => {
       await batch.commit();
     } else {
       alert("Invalid credentials");
-      setShowPopup(false);
-      setPassword("");
-      setEmail("");
     }
   };
 
@@ -122,7 +116,11 @@ const GitHubVisitors = () => {
               ? "border-b-2 border-b-green-600"
               : ""
           } px-4 py-1`}
-          onClick={() => setCurrentCollection("Github Visitors")}
+          onClick={() => {
+            setPassword("");
+            setEmail("");
+            setCurrentCollection("Github Visitors");
+          }}
         >
           GitHub
         </h1>
@@ -132,7 +130,11 @@ const GitHubVisitors = () => {
               ? "border-b-2 border-b-green-600"
               : ""
           } px-4 py-1`}
-          onClick={() => setCurrentCollection("Portfolio Visitors")}
+          onClick={() => {
+            setPassword("");
+            setEmail("");
+            setCurrentCollection("Portfolio Visitors");
+          }}
         >
           Portfolio
         </h1>
@@ -187,7 +189,12 @@ const GitHubVisitors = () => {
               </button>
               <button
                 className="bg-red-500 text-white px-4 py-2 rounded"
-                onClick={deleteCollectionData}
+                onClick={() => {
+                  setShowPopup(false);
+                  setPassword("");
+                  setEmail("");
+                  deleteCollectionData();
+                }}
               >
                 Delete
               </button>
