@@ -1,4 +1,3 @@
-// @ts-nocheck
 // src/GitHubVisitors.js
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
@@ -13,6 +12,7 @@ import Pagination from "./Pagination";
 import ListView from "./ListView";
 import TableView from "./TableView";
 import { useMediaQuery } from "react-responsive";
+import { motion } from "framer-motion";
 
 const columns = [
   {
@@ -106,61 +106,87 @@ const GitHubVisitors = () => {
 
   return (
     <div className="container mx-auto px-4 my-4 relative">
-      <h1 className="text-2xl text-center font-bold mb-4 text-white">
+      <motion.h1
+        className="text-4xl text-center font-bold mb-8 text-white"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         Visitors
-      </h1>
-      <div className="flex justify-center gap-4 mb-4 text-white">
-        <h1
-          className={`text-md font-bold cursor-pointer ${
-            currentCollection === "Github Visitors"
-              ? "border-b-2 border-b-green-600"
-              : ""
-          } px-4 py-1`}
-          onClick={() => {
-            setPassword("");
-            setEmail("");
-            setCurrentCollection("Github Visitors");
-          }}
-        >
-          GitHub
-        </h1>
-        <h1
-          className={`text-md font-bold cursor-pointer ${
-            currentCollection === "Portfolio Visitors"
-              ? "border-b-2 border-b-green-600"
-              : ""
-          } px-4 py-1`}
-          onClick={() => {
-            setPassword("");
-            setEmail("");
-            setCurrentCollection("Portfolio Visitors");
-          }}
-        >
-          Portfolio
-        </h1>
-      </div>
-      <div className="flex mb-4 text-white  justify-between items-center">
+      </motion.h1>
+
+      <motion.div
+        className="flex flex-col justify-center items-center w-full gap-4 mb-4 text-white"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex gap-4">
+          <h1
+            className={`text-md font-bold cursor-pointer ${
+              currentCollection === "Github Visitors"
+                ? "border-b-2 border-b-green-600"
+                : ""
+            } px-4 py-1`}
+            onClick={() => {
+              setPassword("");
+              setEmail("");
+              setCurrentCollection("Github Visitors");
+            }}
+          >
+            GitHub
+          </h1>
+          <h1
+            className={`text-md font-bold cursor-pointer ${
+              currentCollection === "Portfolio Visitors"
+                ? "border-b-2 border-b-green-600"
+                : ""
+            } px-4 py-1`}
+            onClick={() => {
+              setPassword("");
+              setEmail("");
+              setCurrentCollection("Portfolio Visitors");
+            }}
+          >
+            Portfolio
+          </h1>
+        </div>
+      </motion.div>
+
+      <motion.div
+        className="flex mb-4 text-white justify-between items-center"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         <div className="flex gap-6">
-          <p className=" bg-blue-500 text-white p-1 px-2  rounded">
-            Username: {"santhosh-sivkumar"}
-          </p>
-          <p className=" bg-green-500 text-white p-1 px-2  rounded">
-            Total Visitors: {visitors.length}
+          <p className="bg-green-500 text-white p-1 px-2 rounded">
+            Total: {visitors.length}
           </p>
         </div>
         {visitors.length > 0 && (
           <button
-            className=" bg-red-500 text-white p-1 px-2  rounded"
+            className="bg-red-500 text-white p-1 px-2 rounded"
             onClick={() => setShowPopup(true)}
           >
             Clear Data
           </button>
         )}
-      </div>
+      </motion.div>
 
       {showPopup && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-8 rounded shadow-md">
+        <motion.div
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <motion.div
+            className="bg-white p-8 rounded shadow-md"
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             <h2 className="text-xl font-bold mb-4">Enter Credentials</h2>
 
             <input
@@ -199,24 +225,38 @@ const GitHubVisitors = () => {
                 Delete
               </button>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
+
       {isDesktopOrLaptop ? (
-        <TableView
-          columns={columns}
-          loading={loading}
-          currentItems={currentItems}
-          startingID={startingID}
-          fillEmptyRows={fillEmptyRows}
-        />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <TableView
+            columns={columns}
+            loading={loading}
+            currentItems={currentItems}
+            startingID={startingID}
+            fillEmptyRows={fillEmptyRows}
+          />
+        </motion.div>
       ) : (
-        <ListView
-          visitors={currentItems}
-          loading={loading}
-          startingID={startingID}
-        />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <ListView
+            visitors={currentItems}
+            loading={loading}
+            startingID={startingID}
+          />
+        </motion.div>
       )}
+
       <Pagination
         totalItems={visitors.length}
         itemsPerPage={itemsPerPage}
