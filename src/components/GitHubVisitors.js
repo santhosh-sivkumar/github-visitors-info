@@ -160,8 +160,13 @@ const GitHubVisitors = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="flex gap-6">
+          <p className=" bg-blue-500 text-white p-1 px-2  rounded">
+            <span className="hidden sm:inline-block">Username:</span>{" "}
+            {"santhosh-sivkumar"}
+          </p>
           <p className="bg-green-500 text-white p-1 px-2 rounded">
-            Total: {visitors.length}
+            Total:
+            {visitors.length}
           </p>
         </div>
         {visitors.length > 0 && (
@@ -169,7 +174,7 @@ const GitHubVisitors = () => {
             className="bg-red-500 text-white p-1 px-2 rounded"
             onClick={() => setShowPopup(true)}
           >
-            Clear Data
+            Clear <span className="hidden sm:inline-block">Data</span>
           </button>
         )}
       </motion.div>
